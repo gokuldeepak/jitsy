@@ -11,7 +11,7 @@ credentials for login
 systemctl restart prosody
 systemctl restart jicofo
 systemctl restart jitsi-videobridge2
-prosodyctl register sago gmail.com sago
+prosodyctl register username jitsi.domain.com password
 
 
 
