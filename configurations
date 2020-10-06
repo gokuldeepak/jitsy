@@ -23,4 +23,5 @@ VirtualHost "guest.jitsi.domain.com"
 c2s_require_encryption = false
 
 /etc/jitsi/meet/jitsi.domian.com-config.js
+   anonymousdomain: 'guest.jitsi.domain.com',
    
