@@ -1,26 +1,26 @@
 
 credentials for login
 
-/etc/prosody/conf.avail/nova.theedugrid.in.cfg.lua
+/etc/prosody/conf.avail/jitsi.domain.com.cfg.lua
   authentication = "internal_plain"
 
 /etc/jitsi/jicofo/sip-communicator.properties
-  org.jitsi.jicofo.auth.URL=XMPP:nova.theedugrid.in
+  org.jitsi.jicofo.auth.URL=XMPP:jitsi.domain.com
 
 
 systemctl restart prosody
 systemctl restart jicofo
 systemctl restart jitsi-videobridge2
-prosodyctl register sago novatium.com sago
+prosodyctl register sago domain.com sago
 
 
 
 no need to login but need password to join meeting
 
-/etc/prosody/conf.avail/nova.theedugrid.in.cfg.lua
-VirtualHost "guest.nova.theedugrid.in"
+/etc/prosody/conf.avail/jitsi.domain.com.cfg.lua
+VirtualHost "guest.jitsi.domain.com"
   authentication = "anonymous"
 c2s_require_encryption = false
 
-/etc/jitsi/meet/nova.theedugrid.in-config.js
+/etc/jitsi/meet/jitsi.domian.com-config.js
    
