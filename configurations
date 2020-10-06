@@ -11,6 +11,8 @@ credentials for login
 systemctl restart prosody
 systemctl restart jicofo
 systemctl restart jitsi-videobridge2
+
+#user registration
 prosodyctl register username jitsi.domain.com password
 
 
@@ -23,5 +25,6 @@ VirtualHost "guest.jitsi.domain.com"
 c2s_require_encryption = false
 
 /etc/jitsi/meet/jitsi.domian.com-config.js
+   #uncomment the below line
    anonymousdomain: 'guest.jitsi.domain.com',
-   
+#now go to meet.domain.com and start a chat and add security credentials so others can join the chat room started
