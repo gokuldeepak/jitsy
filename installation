@@ -1,6 +1,66 @@
 AWS - Ubuntu 18.04
 
 
+apt-get update
+sudo apt-get install gnupg2
+apt-get install nginx-full
+apt update
+apt install apt-transport-https
+sudo apt-add-repository universe
+sudo apt update
+sudo hostnamectl set-hostname jitsi.domain.co.in
+vi /etc/hosts
+  127.0.0.1 localhost
+  x.x.x.x jitsi.domain.co.in  (x.x.x.x is a public ip)
+
+ping "$(hostname)"
+curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
+echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
+sudo apt update
+sudo apt install jitsi-meet
+sudo /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+
+
+
+Authentication:
+Inside the VirtualHost "[your-hostname]" block, replace anonymous authentication with hashed password authentication:
+
+vi /etc/prosody/conf.avail/jitsi.domain.co.in.cfg.lua
+  VirtualHost "jitsi.domain.co.in"
+      authentication = "internal_hashed"
+
+Enable anonymous login for guests
+vi org.jitsi.jicofo.auth.URL=XMPP:jitsi.domain.co.in
+  VirtualHost "guest.jitsi.domain.co.in"
+      authentication = "anonymous"
+      c2s_require_encryption = false
+
+
+
+In config.js, the anonymousdomain options has to be set.
+
+
+
+If you have installed jitsi-meet from the Debian package, these changes should be made in /etc/jitsi/meet/jitsi.domain.co.in-config.js.
+
+var config = {
+    hosts: {
+            domain: 'jitsi.domain.co.in',
+            anonymousdomain: 'guest.jitsi.domain.co.in',
+            ...
+        },
+        ...
+}
+
+
+
+vi /etc/jitsi/jicofo/sip-communicator.properties
+   org.jitsi.jicofo.auth.URL=XMPP:jitsi.domain.co.in
+
+sudo prosodyctl register <username> jitsi.domain.co.in <password>
+systemctl restart prosody
+systemctl restart jicofo
+systemctl restart jitsi-videobridge2
 
 
 
